@@ -1,0 +1,13 @@
+{
+  "name": "monopoly3d-docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "vitepress build",
+    "dev": "vitepress dev",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

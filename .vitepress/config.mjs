@@ -4,7 +4,7 @@ export default defineConfig({
   title: "Monopoly3D 文档",
   description: "Monopoly3D 大富翁 3D 游戏设计文档与开发指南",
   lang: "zh-CN",
-  base: "/monopoly3d-docs/",
+  base: process.env.VITE_BASE_PATH || "/monopoly3d-docs/",
   ignoreDeadLinks: true,
   head: [
     ["meta", { name: "theme-color", content: "#1a1a2e" }],

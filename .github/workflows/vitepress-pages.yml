@@ -31,12 +31,13 @@ jobs:
         run: npm install --prefer-offline
 
       - name: Build VitePress site
+        env:
+          VITE_BASE_PATH: ${{ github.event.repository.name == 'monopoly3d-docs' && '/monopoly3d-docs/' || '/' }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .vitepress/dist
-          publish_branch: gh-pages
-          force_orphan: true
+        run: |
+          cp -r .vitepress/dist/* .
+          git -c user.email="hermes@yluo.me" -c user.name="Hermes Agent" \
+            commit --allow-empty -m "deploy: $(git rev-parse --short HEAD)"
+          git push origin main:main

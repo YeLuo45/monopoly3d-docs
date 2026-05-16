@@ -37,7 +37,8 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          cp -r .vitepress/dist/* .
+          # VitePress with base=/monopoly3d-docs/ outputs to .vitepress/dist/monopoly3d-docs/
+          cp -r .vitepress/dist/monopoly3d-docs/* .
           git -c user.email="hermes@yluo.me" -c user.name="Hermes Agent" \
             commit --allow-empty -m "deploy: $(git rev-parse --short HEAD)"
           git push origin main:main

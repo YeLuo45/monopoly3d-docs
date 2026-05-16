@@ -37,8 +37,14 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          # VitePress with base=/monopoly3d-docs/ outputs to .vitepress/dist/monopoly3d-docs/
-          cp -r .vitepress/dist/monopoly3d-docs/* .
+          echo "=== dist structure ===" && ls -la .vitepress/dist/ 2>/dev/null || echo "no dist"
+          echo "=== dist subdirs ===" && find .vitepress/dist -type d -maxdepth 3 2>/dev/null | head -20
+          # Copy from dist subdir if exists, else from dist root
+          if [ -d ".vitepress/dist/monopoly3d-docs" ]; then
+            cp -r .vitepress/dist/monopoly3d-docs/* .
+          else
+            cp -r .vitepress/dist/* .
+          fi
           git -c user.email="hermes@yluo.me" -c user.name="Hermes Agent" \
             commit --allow-empty -m "deploy: $(git rev-parse --short HEAD)"
           git push origin main:main

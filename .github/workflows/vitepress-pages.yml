@@ -39,12 +39,14 @@ jobs:
         run: |
           echo "=== dist structure ===" && ls -la .vitepress/dist/ 2>/dev/null || echo "no dist"
           echo "=== dist subdirs ===" && find .vitepress/dist -type d -maxdepth 3 2>/dev/null | head -20
-          # Copy from dist subdir if exists, else from dist root
+          # Copy dist output to root
           if [ -d ".vitepress/dist/monopoly3d-docs" ]; then
             cp -r .vitepress/dist/monopoly3d-docs/* .
           else
             cp -r .vitepress/dist/* .
           fi
+          # Stage all files (including dist output) and commit
+          git add -A .
           git -c user.email="hermes@yluo.me" -c user.name="Hermes Agent" \
             commit --allow-empty -m "deploy: $(git rev-parse --short HEAD)"
           git push origin main:main
